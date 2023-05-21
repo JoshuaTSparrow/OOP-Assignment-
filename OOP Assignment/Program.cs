@@ -98,10 +98,19 @@ namespace Main
 
                     if (result == answer) //Makes the else if for if the awnser is correct and contine the game
                     {
-                        myCounter.Increment();
-                        Console.WriteLine();
-                        Console.WriteLine("Correct!");
-                        StartGame();
+                        Console.WriteLine("Would you like to play again? (y/n)");
+                        string UserChoice;
+                        UserChoice = Console.ReadLine();
+
+                        switch (UserChoice)
+                        {
+                            case "y":
+                            StartGame();
+                            break;
+                            case "n":
+                            MainMenu();
+                             break;
+                        }
                     }
                     else //When the awnser is wrong the game returns to the main menu
                     {
@@ -114,22 +123,7 @@ namespace Main
                 {
                     Console.WriteLine("Invalid input. Please enter a valid integer"); 
                 }
-                //Below is the option to have a yes or no option
 
-                //Console.WriteLine("Would you like to play again? (y/n)");
-               // string UserChoice;
-               // UserChoice = Console.ReadLine();
-
-                //switch (UserChoice)
-                {
-                   // case "y":
-                        //StartGame();
-                        //break;
-                    //case "n":
-                       // MainMenu();
-                       // break;
-
-                }
             }
         }
 
