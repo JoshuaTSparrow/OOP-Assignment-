@@ -9,18 +9,18 @@ namespace OOP_Assignment
 {
     public class Card
     {
-        public string Suit { get; }
+        public string Suit { get; } //Creates a suit and rank for the card
         public string Rank { get; }
 
         public Card(string suit, string rank)
         {
-            Suit = suit;
+            Suit = suit; //Makes the suit and rank to be able to be read
             Rank = rank;
         }
 
         public override string ToString()
         {
-            return $"{Rank} of {Suit}";
+            return $"{Rank} of {Suit}"; //Returns the rank and suit to the program
         }
     }
 }

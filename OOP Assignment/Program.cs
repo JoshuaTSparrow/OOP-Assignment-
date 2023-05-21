@@ -1,7 +1,9 @@
 ﻿using OOP_Assignment;
 using System;
 using System.ComponentModel.DataAnnotations;
+using System.Diagnostics.Metrics;
 using System.Dynamic;
+using static Main.Program;
 
 namespace Main
 {
@@ -9,12 +11,12 @@ namespace Main
     {
         static void Main(string[] args)
         {
-            MainMenu();
+            MainMenu(); // Launches the main program (MainMenu)
         }
         static void MainMenu()
-        {
-            Console.Clear();
-            Console.WriteLine("Welcome to My Maths Game Program");
+        {   
+            Console.Clear();                                                                //Makes the Main menu text 
+            Console.WriteLine("Welcome to My Maths Game Program");                      
             Console.WriteLine("1) Start Game");
             Console.WriteLine("2) Tutorial");
             Console.WriteLine("3) Exit");
@@ -23,16 +25,16 @@ namespace Main
             string UserChoice;
             UserChoice = Console.ReadLine();
 
-            switch (UserChoice)
+            switch (UserChoice)  //Creates the User choice 
             {
                 case "1":
-                    StartGame();
+                    StartGame(); //Starts the Game
                     break;
                 case "2":
-                    Tutorial();
+                    Tutorial(); //Goes to the tutorial
                     break;
                 case "3":
-                    Quit();
+                    Quit(); //Quits the Program
                     break;
             }
             MainMenu();
@@ -40,15 +42,19 @@ namespace Main
 
 
 
-        static void StartGame()
+        static void StartGame() // Starts the game 
         {
-            Console.Clear();
+            Console.Clear(); //Clears the console. This makes the the game clear the console making it cleaner
             {
-                Deck deck = new Deck();
+                Counter myCounter = new Counter(); // Creates a counter for the scorboard
+                int Score = myCounter.GetCount(); // Makes a Varible for the counter
+
+
+                Deck deck = new Deck(); //Makes a new deck and draws 2 cards
                 Card card1 = deck.DrawCard();
                 Card card2 = deck.DrawCard();
 
-                int number1 = card1.Rank switch
+                int number1 = card1.Rank switch //Changes the Rank of the J,Q,K,A into numbers. This is reaped twice
                 {
                     "Ace" => 1,
                     "Jack" => 11,
@@ -66,7 +72,7 @@ namespace Main
                     _ => int.Parse(card2.Rank)
                 };
 
-                string operation = card1.Suit switch
+                string operation = card1.Suit switch // Changes the suit of the first card and thi will be the eqution 
                 {
                     "Spades" => "+",
                     "Hearts" => "-",
@@ -74,11 +80,12 @@ namespace Main
                     "Clubs" => "/"
                 };
 
-                Console.WriteLine($"What is {number1} {operation} {number2}?");
+                Console.WriteLine($"Your Score is - {Score}"); //This is the counter for the user
+                Console.WriteLine($"What is {number1} {operation} {number2}?"); //Shows the eqution for user and the prompt to awnser
 
                 string userAnswer = Console.ReadLine();
 
-                if (int.TryParse(userAnswer, out int result))
+                if (int.TryParse(userAnswer, out int result)) //Calculates the eqution for the awnser 
                 {
                     int answer = operation switch
                     {
@@ -89,38 +96,44 @@ namespace Main
                         _ => throw new InvalidOperationException($"Invalid operator: {operation}")
                     };
 
-                    if (result == answer)
+                    if (result == answer) //Makes the else if for if the awnser is correct and contine the game
                     {
+                        myCounter.Increment();
+                        Console.WriteLine();
                         Console.WriteLine("Correct!");
+                        StartGame();
                     }
-                    else
+                    else //When the awnser is wrong the game returns to the main menu
                     {
                         Console.WriteLine($"Incorrect. The answer is {answer}.");
+                        Console.WriteLine("Press enter to go baxk to menu");
+                        Console.ReadLine();
                     }
                 }
-                else
+                else //This is for errors when they dont input a number
                 {
-                    Console.WriteLine("Invalid input. Please enter a valid integer");
+                    Console.WriteLine("Invalid input. Please enter a valid integer"); 
                 }
+                //Below is the option to have a yes or no option
 
-                Console.WriteLine("Would you like to play again? (y/n)");
-                string UserChoice;
-                UserChoice = Console.ReadLine();
+                //Console.WriteLine("Would you like to play again? (y/n)");
+               // string UserChoice;
+               // UserChoice = Console.ReadLine();
 
-                switch (UserChoice)
+                //switch (UserChoice)
                 {
-                    case "y":
-                        StartGame();
-                        break;
-                    case "n":
-                        MainMenu();
-                        break;
+                   // case "y":
+                        //StartGame();
+                        //break;
+                    //case "n":
+                       // MainMenu();
+                       // break;
 
                 }
             }
         }
 
-        static void Tutorial()
+        static void Tutorial()  // This is the toutorial for the program
         {
             Console.Clear();
             Console.WriteLine("Welcome to the tutorial");
@@ -132,10 +145,10 @@ namespace Main
             Console.ReadLine();
         }
 
-        static void Quit()
+        static void Quit() // This is what quits the program. 
         {
             Console.Clear();
-            Console.WriteLine("Are you Sure you want to Leave (Y/N)");
+            Console.WriteLine("Are you Sure you want to Leave (Y/N)"); //Makes a a prompt for the user to quit 
             string UserChoice;
             UserChoice = Console.ReadLine();
 
@@ -149,6 +162,21 @@ namespace Main
                     MainMenu();
                     break;
 
+            }
+        }
+
+        public class Counter
+        {
+            private int count = 0; // Declare and initialize the private counter variable
+
+            public void Increment() // Method to increment the counter
+            {
+                count++;
+            }
+
+            public int GetCount() // Method to get the current value of the counter
+            {
+                return count;
             }
         }
 
